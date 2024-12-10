@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'itinerary_screen.dart';
-import 'profile_screen.dart';
+
 
 class HomeScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -57,14 +57,9 @@ class HomeScreen extends StatelessWidget {
             _buildRecentItineraries(),
 
             const Spacer(),
-
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ItineraryScreen()
-                  ),
-                );
+                Navigator.of(context).pushNamed('/itineraries');
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
@@ -194,13 +189,15 @@ class HomeScreen extends StatelessWidget {
 
    // Sign-out method
   Future<void> _signOut(BuildContext context) async {
-    // Sign out logic
-    // Here you should add your Firebase authentication sign-out logic.
-    // Example:
+  try {
     await FirebaseAuth.instance.signOut();
-
-    Navigator.pushReplacementNamed(context, '/login'); // Adjust to your app's login screen route
+    Navigator.pushReplacementNamed(context, '/login'); // Navigate to login screen
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error signing out: $e')),
+    );
   }
+}
 }
 
 // Destination Details Screen (New page)

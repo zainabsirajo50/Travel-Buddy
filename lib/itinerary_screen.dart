@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'explore_screen.dart'; // Import the ExploreScreen
 
 class ItineraryScreen extends StatefulWidget {
   const ItineraryScreen({Key? key}) : super(key: key);
@@ -44,6 +45,18 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Itinerary Planner'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.map),
+            onPressed: () {
+              // Navigate to the Explore Screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ExploreScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -63,6 +76,17 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                 ElevatedButton(
                   onPressed: _addItinerary,
                   child: const Text('Add Itinerary'),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigate to the Explore Screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ExploreScreen()),
+                    );
+                  },
+                  child: const Text('Explore Nearby'),
                 ),
               ],
             ),
